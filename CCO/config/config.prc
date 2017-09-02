@@ -14,6 +14,8 @@ win-size 1280 720
 
 cursor-hidden false
 
+want-tk false
+
 show-frame-rate-meter false
 
 audio-library-name p3fmod_audio

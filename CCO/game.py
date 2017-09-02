@@ -78,6 +78,13 @@ class GameTest(ShowBase):
         self.leftDoor.setX(3.50)
         self.rightDoor.setX(-3.50)
 
+        self.skelCog = Actor("phase_5/models/char/cogC_robot-lose-mod.bam", {'neutral': 'phase_3.5/models/char/suitC-neutral.bam',
+                                                                             'victory': 'phase_4/models/char/suitC-victory.bam',
+                                                                             'walk': 'phase_3.5/models/char/suitC-walk.bam'})
+        self.skelCog.reparentTo(self.render)
+        self.skelCog.setPos(-16, 0, -4.76)
+        self.skelCog.setH(180)
+
 
 
 
@@ -335,11 +342,14 @@ class GameTest(ShowBase):
         Spin3 = self.camera.hprInterval(1.00, Vec3(0, 0, 0))
         self.cameraMove = Sequence(Walk1, Spin1, cogSpin, Walk2, Walk3, Spin2, Walk4, Walk5, Spin3)
 
-        Walk1 = self.camera.posInterval(2.50, Point3(0, -77.48, 3.42))
+        Walk1 = self.camera.posInterval(1.50, Point3(0, -77.48, 3.42))
         Spin1 = self.camera.hprInterval(1.00, Vec3(0, 0, 0))
         Walk2 = self.camera.posInterval(2.50, Point3(0, -77.48, 3.42))
         Walk3 = self.camera.posInterval(3.00, Point3(0, -22.48, 3.42))
-        self.cameraStart = Sequence(Walk1, Spin1, Walk2, Walk3)
+        Walk4 = self.camera.posInterval(2.00, Point3(0, -22.48, 3.42))
+        skelMove1 = self.skelCog.posInterval(0.50, Point3(-16, -0, 0))
+        skelMove2 = self.skelCog.posInterval(2.00, Point3(0, -0, 0))
+        self.cameraStart = Sequence(Walk1, Spin1, Walk2, Walk3, Walk4, skelMove1, skelMove2)
 
         Walk1 = self.camera.posInterval(15.50, Point3(6.31, -45.31, 9.27))
         Spin1 = self.camera.hprInterval(0.00, Vec3(337.52, 0, 0))
@@ -350,7 +360,7 @@ class GameTest(ShowBase):
         Walk5 = self.camera.posInterval(15.00, Point3(0.44, -51.38, 21.411))
         Spin3 = self.camera.hprInterval(0.00, Vec3(337.52, 0, 0))
         self.cameraIntro = Sequence(Walk1, Spin1, Walk2, Walk3, Walk4, Spin2, Walk5, Spin3)
-        self.cameraIntro.start()
+        self.cameraIntro.loop()
 
 
 
@@ -436,10 +446,10 @@ class GameTest(ShowBase):
            self.logoRight.destroy()
            self.logoLeft.destroy()
            self.textNodePath.hide()
-           self.cameraIntro.finish()
+           self.cameraIntro.pause()
            self.cameraStart.start()
         else:
-           self.cameraStart.stop()
+           self.cameraStart.finish()
 
 load = GameTest()
 load.run()
