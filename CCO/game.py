@@ -394,20 +394,20 @@ class GameTest(ShowBase):
 
         #-----optionText-----------#
 
-        fps = ""
-        textObject = OnscreenText(text=fps, pos=(-1.4, -0.97),
+        fps = "Show FPS: f2"
+        self.textObject1 = OnscreenText(text=fps, pos=(-1.4, -0.97),
         scale=0.09, fg=(1, 0.5, 0.5, 1), align=TextNode.ACenter, mayChange=1)
-        textObject.setFont(font)
+        self.textObject1.setFont(font)
 
-        fullscreen = ""
-        textObject2 = OnscreenText(text=fullscreen, pos=(-1.34, -0.88),
+        fullscreen = "Fullscreen: f2"
+        self.textObject2 = OnscreenText(text=fullscreen, pos=(-1.34, -0.88),
                                   scale=0.09, fg=(1, 0.5, 0.5, 1), align=TextNode.ACenter, mayChange=1)
-        textObject2.setFont(font)
+        self.textObject2.setFont(font)
 
-        audio = ""
-        textObject3 = OnscreenText(text=audio, pos=(-1.48, -0.78),
+        audio = "Audio: f4"
+        self.textObject3 = OnscreenText(text=audio, pos=(-1.48, -0.78),
                                    scale=0.09, fg=(1, 0.5, 0.5, 1), align=TextNode.ACenter, mayChange=1)
-        textObject3.setFont(font)
+        self.textObject3.setFont(font)
 
 
         #------doneButton--------#
@@ -433,7 +433,8 @@ class GameTest(ShowBase):
         #----------key/click-events-------#
 
         self.acceptOnce("f1", self.play)
-        #self.accept("f", self.frameRate)
+        #self.accept("f2", self.frameRate)
+
 
     def moveCamera(self):
         if self.camera:
@@ -445,11 +446,12 @@ class GameTest(ShowBase):
         if self.logoRight:
            self.logoRight.destroy()
            self.logoLeft.destroy()
+           self.textObject3.hide()
+           self.textObject2.hide()
+           self.textObject1.hide()
            self.textNodePath.hide()
            self.cameraIntro.pause()
            self.cameraStart.start()
-        else:
-           self.cameraStart.finish()
 
 load = GameTest()
 load.run()
