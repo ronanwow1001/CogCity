@@ -366,7 +366,6 @@ class GameTest(ShowBase):
 
         #----camera---#
 
-
         self.camera.setPos(6.31, -82.36, 9.27)
         self.camera.setHpr(35.71, 0, 0)
 
@@ -412,28 +411,29 @@ class GameTest(ShowBase):
 
         #------doneButton--------#
 
-        #font = self.loader.loadFont("phase_3/models/fonts/vtRemingtonPortable.ttf")
+        font = self.loader.loadFont("phase_3/models/fonts/vtRemingtonPortable.ttf")
 
-        #bk_text = ""
-        #textObject = OnscreenText(text=bk_text, pos=(0.00, 0.73),
-                                  #scale=0.16, fg=(1, 0.5, 0.5, 1), align=TextNode.ACenter, mayChange=1)
-        #textObject.setFont(font)
-        #textObject.setColor(0.3, 0.3, 0.35, 1.0)
+        bk_text = ""
+        textObject = OnscreenText(text=bk_text, pos=(0.00, 0.73),
+                                  scale=0.16, fg=(1, 0.5, 0.5, 1), align=TextNode.ACenter, mayChange=1)
+        textObject.setFont(font)
+        textObject.setColor(0.3, 0.3, 0.35, 1.0)
 
-        #def setText(status):
-            #if (status):
-                #bk_text = "Do you want to continue?"
-            #else:
-                #bk_text = ""
-            #textObject.setText(bk_text)
+        def setText(status):
+            if (status):
+                bk_text = "Do you want to continue?"
+            else:
+                bk_text = ""
+            textObject.setText(bk_text)
 
 
-        #b = DirectCheckButton(text="Continue", scale=0.12, pos=(0, 0, -0.80), command=setText)
+        self.DoneButton = DirectCheckButton(text="Continue", scale=0.12, pos=(0, 0, -0.80), command=setText)
+        self.DoneButton.hide()
 
         #----------key/click-events-------#
 
-        self.acceptOnce("f1", self.play)
-        #self.accept("f2", self.frameRate)
+        self.acceptOnce("f1-up", self.play)
+        self.accept("f2-up", self.frameRate)
 
 
     def moveCamera(self):
@@ -441,6 +441,18 @@ class GameTest(ShowBase):
            self.cameraMove.start()
         else:
             self.cameraMove.stop()
+
+    def popupGUI(self):
+        if self.DoneButton:
+            self.DoneButton.show()
+
+    def frameRate(self):
+        if self.textObject1:
+           self.setFrameRateMeter(True)
+        else:
+            self.setFrameRateMeter(False)
+
+
 
     def play(self):
         if self.logoRight:
